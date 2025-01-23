@@ -1,0 +1,113 @@
+import { useState } from "react";
+import "./App.css";
+
+export default function App() {
+  const [currentInput, setCurrentInput] = useState("");
+  const [result, setResult] = useState(null);
+
+  // Numbers for the calculator
+  const operand = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  // Generate number buttons
+  const numberElements = operand.map((number) => (
+    <button
+      key={number}
+      onClick={() => setCurrentInput((prev) => prev + number)}
+    >
+      {number}
+    </button>
+  ));
+
+  // Handle addition
+  const suma = () => {
+    const sum = currentInput
+      .split("")
+      .reduce((total, num) => total + parseFloat(num), 0);
+    setResult(sum);
+  };
+
+  // Handle subtraction
+  const resta = () => {
+    const numbers = currentInput.split("").map(Number);
+    const difference = numbers.reduce((total, num) => total - num);
+    setResult(difference);
+  };
+
+  // Handle multiplication
+  const multiplicacion = () => {
+    const product = currentInput
+      .split("")
+      .reduce((total, num) => total * parseFloat(num), 1);
+    setResult(product);
+  };
+
+  // Handle division
+  const division = () => {
+    const numbers = currentInput.split("").map(Number);
+    const quotient = numbers.reduce((total, num) => total / num);
+    setResult(quotient);
+  };
+
+  // Clear input and result
+  const clear = () => {
+    setCurrentInput("");
+    setResult(null);
+  };
+
+  return (
+    <main>
+      <h1>The Calc</h1>
+      <div className="display">
+        Input: {currentInput || "0"} <br />
+        Result: {result !== null ? result : "N/A"}
+      </div>
+      <div className="buttons">
+        <div className="numbers">{numberElements}</div>
+        <div className="operations">
+          <button onClick={suma}>+</button>
+          <button onClick={resta}>-</button>
+          <button onClick={multiplicacion}>*</button>
+          <button onClick={division}>/</button>
+          <button onClick={clear}>C</button>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+/// index.css
+
+body{
+  background-color: #ff875f;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  height: 50vh;
+}
+
+main{
+  display: block;
+  margin: auto;
+  padding: 20px;
+  background-color: rgb(227, 181, 143);
+  width: 50vh;
+  height: 20vh;
+}
+
+.buttons{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+
+.numbers > button{
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ff875f;
+  border-radius: 10px;
+}
+
+.operations > button{
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ff875f;
+  border-radius: 10px;
+}
